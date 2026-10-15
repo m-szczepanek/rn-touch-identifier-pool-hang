@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native/React/Fabric/RCTSurfaceTouchHandler.mm b/node_modules/react-native/React/Fabric/RCTSurfaceTouchHandler.mm
+index 4945d35..565bb4c 100644
+--- a/node_modules/react-native/React/Fabric/RCTSurfaceTouchHandler.mm
++++ b/node_modules/react-native/React/Fabric/RCTSurfaceTouchHandler.mm
+@@ -307,6 +307,9 @@ - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+ {
+   [super touchesBegan:touches withEvent:event];
+ 
++   [self _registerTouches:touches];
++   // REPRO: simulates UIKit delivering touchesBegan twice for the same UITouch.
++   // emplace() is a no-op for the second call, so one pool identifier leaks per tap.
+   [self _registerTouches:touches];
+   [self _dispatchActiveTouches:[self _activeTouchesFromTouches:touches] eventType:RCTTouchEventTypeTouchStart];
+ 

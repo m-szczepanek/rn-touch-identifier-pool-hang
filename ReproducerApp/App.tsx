@@ -1,45 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
+export default function App() {
+    const [taps, setTaps] = useState(0);
+    return (
+        <Pressable style={styles.root} onPress={() => setTaps(t => t + 1)}>
+            <Text style={styles.text}>Taps: {taps}</Text>
+            <Text>App freezes on tap 18 (pool size 17, one identifier leaked per tap)</Text>
+        </Pressable>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+    root: { alignItems: 'center', flex: 1, justifyContent: 'center', backgroundColor: 'white' },
+    text: { fontSize: 48 },
 });
-
-export default App;
